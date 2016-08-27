@@ -1,5 +1,5 @@
-#ifndef ADDER_SERVICE_IMPL_H
-#define ADDER_SERVICE_IMPL_H
+#ifndef SIMPLE_ADDER_SERVICE_IMPL_H
+#define SIMPLE_ADDER_SERVICE_IMPL_H
 
 #include "../AdderService.h"
 class SimpleAdderServiceImpl : public AdderService {
