@@ -1,19 +1,18 @@
 // Includes of the interfacing modules
 #include "components/AdderService.h"
 #include "components/PrinterServices.h"
+#include "components/MainControllerService.h"
 
 // Includes of the Implementation components
 #include "components/SimpleAdderServiceImpl/ComponentImpl.h"
 // There can be multiple printer services (see interfacing module)
+// Here we have two of them (one writes to stdout and other to file)
 #include "components/SimplePrinterServiceImpl/ComponentImpl.h"
+#include "components/FilePrinterServiceImpl/ComponentImpl.h"
+#include "components/MainControllerServiceImpl/ComponentImpl.h"
 
 int main() {
-	// In main, I just call one of the components
-	// that serve as entry points semantically...
-	AdderService adder;
-	PrinterServices printerServices;
-	int result = adder.add(5, 10);
-	printerServices.print(result);
-
-	return 0;
+	// Run the entry service
+	MainControllerService mainControllerService;
+	return mainControllerService.run();
 }
