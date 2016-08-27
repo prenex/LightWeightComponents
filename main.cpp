@@ -1,9 +1,10 @@
 // Includes of the interfacing modules
+#define LWC_INTERFACING_MODULES
 #include "components/AdderService.h"
 #include "components/PrinterServices.h"
 #include "components/MainControllerService.h"
 
-// Includes of the Implementation components
+#define LWC_IMPLEMENTATION_MODULES
 #include "components/SimpleAdderServiceImpl/ComponentImpl.h"
 // There can be multiple printer services (see interfacing module)
 // Here we have two of them (one writes to stdout and other to file)

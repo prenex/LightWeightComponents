@@ -22,6 +22,8 @@ public:
 };
 // Creating the implementation ensures service reg.
 // this will be included before the main, and run before that!
+#ifdef LWC_IMPLEMENTATION_MODULES
 static MainControllerServiceImpl mainControllerServiceImpl;
+#endif
 
 #endif

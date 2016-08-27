@@ -18,7 +18,8 @@ public:
 };
 // The variable should be defined in some cpp file
 // it will be in the cpp that includes this first!
-// (I know... it's not the most clean approach but whatever)
+#ifdef LWC_INTERFACING_MODULES
 AdderService *AdderService::adderServiceImpl;
+#endif
 
 #endif
