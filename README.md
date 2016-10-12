@@ -60,3 +60,74 @@ For an even simpler architecture without the descending non-recursive make, look
 
 Actually this can be used in that way that the whole "system" starts later than the main at a random point. I hope you see how.
 So this is kind of a static module/plugin system or pattern where instead of knowing what this or that "container" do, you see everything explained in code. This should make it easier to grasp the things even for those who don't know these techniques and hopefully the whole approach is more cleaner than its heavyweight counterparts.
+
+Highlights
+==========
+
+Dependency injection in an implementer:
+
+
+	#ifndef MAIN_CONTROLLER_SERVICE_IMPL_H
+	#define MAIN_CONTROLLER_SERVICE_IMPL_H
+	
+	#include "../AdderService.h"
+	#include "../PrinterServices.h"
+	#include "../MainControllerService.h"
+	
+	namespace MainControllerServiceImpl {
+		class ComponentImpl : public MainControllerService {
+		private:
+			AdderService adder;
+			PrinterServices printers;
+		public:
+			ComponentImpl() {
+				MainControllerService::registerMainControllerService(this);
+			}
+			virtual int run();
+		};
+	}
+	// Creating the implementation ensures service reg.
+	// this will be included before the main, and run before that!
+	#ifdef LWC_IMPLEMENTATION_MODULES
+	static MainControllerServiceImpl::ComponentImpl mainControllerServiceImpl;
+	#endif
+	
+	#endif
+
+In the cpp file you can just use the variables that will serve the implementation chosen by the main:
+
+	int result = adder.add(5, 10);
+	printers.print(result);
+
+In the main.cpp one can define declaratively what interfacing headers and implementation components the deployment uses and what is the entry point. It is like some 'descriptor' files in heavyweight systems:
+
+	#define LWC_INTERFACING_MODULES
+	#include "AdderService.h"
+	#include "PrinterServices.h"
+	#include "MainControllerService.h"
+	
+	// There can be multiple printer services (see interfacing module)
+	// Here we have two of them (one writes to stdout and other to file)
+	#define LWC_IMPLEMENTATION_MODULES
+	#include "SimpleAdderServiceImpl/ComponentImpl.h"
+	#include "SimplePrinterServiceImpl/ComponentImpl.h"
+	#include "FilePrinterServiceImpl/ComponentImpl.h"
+	#include "MainControllerServiceImpl/ComponentImpl.h"
+	
+	int main() {
+		// Run the entry service
+		MainControllerService mainControllerService;
+		return mainControllerService.run();
+	}
+
+Descending non-recursive make build uses small and clean *.mk descriptions like this:
+
+	# Component make descriptor
+	# -------------------------
+	#
+	# List all implementation subdirectories with node.mk files in them
+	SUBDIRS-y += 
+	# List all *.o files in the top level directory of the component
+	OBJS-y    += ComponentImpl.o
+	# List all library (*.a) files here if necessary
+	LIBS-y    +=
