@@ -1,6 +1,8 @@
 # LightWeightComponents
 Light-weight component patterns for C++. Like a framework that is able to do DI, but sucks less so much that it didn't became a framework at all in the end lol :-)
 
+Because there is no "real" framework. The system comes with a self-contained small example calculator which should be big enough to understand how to use the presented ideas, but small enough to immediately refactor to your own needs.
+
 Details:
 ========
 A really small example that shows a good pattern in component based C++ programming. First I wanted to make a framework that is able to do dependency injection like things but is suckless and came up with the idea to express more in plain code than that. This is the result which can be used for building plugin-based architectures while keeping the static linkage and easy usage. This enables 3rd party developers to easily add code to your codebase while having a clean structure. Also this enables something that looks like a sane dependency injection without any weird "annotation" but keeping a very clean code.
@@ -54,7 +56,7 @@ I have added a non-recursive make that enables one to build *.cpp files and dire
 * In the components directory, you need to fill the top level node.mk for the impl modules. The modules should have cpp files and node.mk files but here I have shown some examples that are header-only and really lightweight. That is also a way to go.
 * Interfacing headers need not use any namespaces (though not prohibited), but each implementation component should do this to avoid name clashes!
 
-For a simpler architecture without the descending non-recursive make, look at the earlier git commits if you want, but that is only for really small projects.
+For an even simpler architecture without the descending non-recursive make, look at the earlier git commits if you want, but that is only for really small projects. See: eb460b2d58f5e8561ec91e7d4e5162a3d5e874ad
 
 Actually this can be used in that way that the whole "system" starts later than the main at a random point. I hope you see how.
 So this is kind of a static module/plugin system or pattern where instead of knowing what this or that "container" do, you see everything explained in code. This should make it easier to grasp the things even for those who don't know these techniques and hopefully the whole approach is more cleaner than its heavyweight counterparts.
