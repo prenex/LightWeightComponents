@@ -7,9 +7,7 @@ public:
 	SimpleAdderServiceImpl() {
 		AdderService::registerAdderService(this);
 	}
-	virtual int add(int x, int y) {
-		return x + y;
-	}
+	virtual int add(int x, int y);
 };
 // Creating the implementation ensures service reg.
 // this will be included before the main, and run before that!

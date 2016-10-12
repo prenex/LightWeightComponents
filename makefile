@@ -1,4 +1,6 @@
-# TODO: Currently only compiles the showobj example
+# The target executable name
+# with em++ it gets suffixed with ".html"
+TARGET=main
 
 # for gcc5.1+:
 CC=g++
@@ -26,24 +28,51 @@ else
 endif
 endif
 
-SOURCES=main.cpp
-OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=main
+# Directory of the make, currently the local
+MK_DIR=.
+# Directory of underlying source tree
+SRC_DIR=components
 
-all: $(SOURCES) $(EXECUTABLE)
+# Non-recursive generic make from:
+# --------------------------------
+# 	http://abusalimov.blogspot.hu/2009/12/yet-another-implementation-of-non.html
+all: $(TARGET)
+include $(MK_DIR)/traverse.mk
+# Clear and switch it to immediate expansion mode
+# to be able to use += operator later.
+OBJS_ALL:=
+# This code is executed each time when per-directory makefile is processed.
+define TRAVERSE_CALLBACK
+	OBJS_ALL += $$(addprefix $(NODE_DIR)/,$(NODE_OBJS))
+endef
+# Walk the directory tree starting at $(SRC_DIR)
+# and searching for node.mk in each subdirectory.
+$(eval $(call TRAVERSE,$(SRC_DIR),node.mk,TRAVERSE_CALLBACK))
 
+# DEBUG
+#$(warning OBJS_ALL is $(OBJS_ALL))
+#$(warning TARGET is $(TARGET))
+
+# Process dependency files too. 
+-include $(OBJS_ALL:.o=.d)
+# Link all together! 
 # The LDFLAGS should be after the files
 # because of some lazyness in newer toolchains!
-$(EXECUTABLE): $(OBJECTS) 
-# In case of emscripten build, we make a html5/webgl output
+# in case of emscripten we produce html5/webgl outputs etc
+$(TARGET): $(OBJS_ALL)
 ifeq ($(CC),em++)
-	$(CC) $(OBJECTS) -o $@.html $(LDFLAGS)
+	@$(CC) -o $@.html $(OBJS_ALL) $(LDFLAGS)  #-T $(LDSCRIPT) 
 else
-	$(CC) $(OBJECTS) -o $@ $(LDFLAGS)
+	@$(CC) -o $@ $(OBJS_ALL) $(LDFLAGS)  #-T $(LDSCRIPT) 
 endif
 
+# Generic pattern-rule for building
+# all *.o using *.cpp files using
+# the below command template
 .cpp.o:
 	$(CC) $(CFLAGS) $< -o $@
 
+# TODO: similar non-recursive call is necessary here
+.PHONY: clean
 clean:
 	rm *.o
