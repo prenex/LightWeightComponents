@@ -72,7 +72,7 @@ endif
 .cpp.o:
 	$(CC) $(CFLAGS) $< -o $@
 
-# TODO: similar non-recursive call is necessary here
 .PHONY: clean
 clean:
-	rm *.o
+	rm $(OBJS_ALL)
+	rm main
