@@ -77,8 +77,8 @@ Dependency injection in an implementer:
 	namespace MainControllerServiceImpl {
 		class ComponentImpl : public MainControllerService {
 		private:
-			AdderService adder;
-			PrinterServices printers;
+			AdderService adder; // DI !!!
+			PrinterServices printers; // DI !!!
 		public:
 			ComponentImpl() {
 				MainControllerService::registerMainControllerService(this);
