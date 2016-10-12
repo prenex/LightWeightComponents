@@ -7,6 +7,39 @@ A really small example that shows a good pattern in component based C++ programm
 
 Architecture:
 =============
+
+	.
+	├── components
+	│   ├── AdderService.h
+	│   ├── FilePrinterServiceImpl
+	│   │   ├── ComponentImpl.cpp
+	│   │   ├── ComponentImpl.h
+	│   │   ├── ComponentImpl.o
+	│   │   └── node.mk
+	│   ├── MainControllerService.h
+	│   ├── MainControllerServiceImpl
+	│   │   ├── ComponentImpl.cpp
+	│   │   ├── ComponentImpl.h
+	│   │   ├── ComponentImpl.o
+	│   │   └── node.mk
+	│   ├── main.cpp
+	│   ├── main.o
+	│   ├── node.mk
+	│   ├── PrinterServices.h
+	│   ├── SimpleAdderServiceImpl
+	│   │   ├── ComponentImpl.cpp
+	│   │   ├── ComponentImpl.h
+	│   │   ├── ComponentImpl.o
+	│   │   └── node.mk
+	│   └── SimplePrinterServiceImpl
+	│       └── ComponentImpl.h
+	├── LICENSE
+	├── main
+	├── makefile
+	├── out.txt
+	├── README.md
+	└── traverse.mk
+
 * The main file should not contain anything else just the interfacing modules and implementation components and the main calling a controller...
 * Interfacing module: this is a header of a class that the implementers implement. Its code just delegates to the real implementers.
 * The way of delegation (1:1 or 1:n and exception handling etc) can be seen in the code of the interfacing module directly!
@@ -19,6 +52,7 @@ I have added a non-recursive make that enables one to build *.cpp files and dire
 * These describe the *.o files created in that directory and further subdirectories
 * You can also specify *.a libs at these points.
 * In the components directory, you need to fill the top level node.mk for the impl modules. The modules should have cpp files and node.mk files but here I have shown some examples that are header-only and really lightweight. That is also a way to go.
+* Interfacing headers need not use any namespaces (though not prohibited), but each implementation component should do this to avoid name clashes!
 
 For a simpler architecture without the descending non-recursive make, look at the earlier git commits if you want, but that is only for really small projects.
 
