@@ -74,5 +74,5 @@ endif
 
 .PHONY: clean
 clean:
-	rm $(OBJS_ALL)
-	rm main
+	rm -f $(OBJS_ALL)
+	rm -f main
