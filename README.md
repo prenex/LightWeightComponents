@@ -9,7 +9,7 @@ Architecture:
 =============
 * The main file should not contain anything else just the interfacing modules and implementation components and the main calling a controller...
 * Interfacing module: this is a header of a class that the implementers implement, but delegate to the implementers.
-* The way of delegation (1:1 or 1:n and exception handling etc) are seen in the code directly!
+* The way of delegation (1:1 or 1:n and exception handling etc) can be seen in the code of the interfacing module directly!
 * Implementation module: this is a directory with a header file of the implementation. The cpp for the header has the main entry, but there can be a lot of "normal" files and classes below this directory that belongs to the public interface named ComponentImpl.
 * Dependency Injection-like things can be done by just creating the interfacing module class. That is all!
 
