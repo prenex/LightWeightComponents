@@ -37,5 +37,5 @@ template<typename T> class lwc2_inject {};
 // Choose your implementation plugin / module for printer service by changing order here
 // as always the first in the list will get injected when more implementaion is available
 // in the lwc2.h descriptor file:
-#include "SimplePrinterServiceImpl/ComponentImpl.h"
 #include "FilePrinterServiceImpl/ComponentImpl.h"
+#include "SimplePrinterServiceImpl/ComponentImpl.h"
