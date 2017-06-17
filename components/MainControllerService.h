@@ -2,28 +2,21 @@
 #define MAIN_CONTROLLER_SERVICE_H
 
 // Interfacing module's class
-class MainControllerService {
-private:
-	static MainControllerService* mainControllerServiceImpl;
-public:
-	// Return the value that should be returned by main
-	virtual int run() {
-		if(mainControllerServiceImpl != nullptr) {
-			return mainControllerServiceImpl->run();
-		} else {
-			// Big error!
-			return 1;
-		}
-	}
-	
-	static void registerMainControllerService(MainControllerService* impl) {
-		mainControllerServiceImpl = impl;
-	}
-};
-// The variable should be defined in some cpp file
-// it will be in the cpp that set this!
-#ifdef LWC_INTERFACING_MODULES
-MainControllerService *MainControllerService::mainControllerServiceImpl;
-#endif
+namespace MainController {
+	class Service {
+		/**
+		 * Runs the main controller
+		 *
+		 * Function needs to be deleted to aid static compilation checks.
+		 * Function is virtual only for override checking, but we never use vtbl
+		 *  as the compiler will see we are never reaching this through pointers
+		 *  or references, but directly! This way we might have waste in space
+		 *  but no waste of runtime.
+		 */
+		virtual int run(int argc, char* argv[]) = 0;
+	};
 
-#endif
+	// Here you might have DTO structs and stuff to interface to us...
+}
+
+#endif // MAIN_CONTROLLER_SERVICE_H

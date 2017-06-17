@@ -1,13 +1,12 @@
-#ifndef ADDER_SERVICE_H
-#define ADDER_SERVICE_H
+#ifndef PRINTER_SERVICE_H
+#define PRINTER_SERVICE_H
 
 // An interfacing module
-namespace Adder {
+namespace Printer {
 	// Service interface
 	class Service {
-	public:
 		/**
-		 * Adds two numbers
+		 * Prints a number
 		 *
 		 * Function needs to be deleted to aid static compilation checks.
 		 * Function is virtual only for override checking, but we never use vtbl
@@ -15,10 +14,10 @@ namespace Adder {
 		 *  or references, but directly! This way we might have waste in space
 		 *  but no waste of runtime.
 		 */
-		virtual int add(int x, int y) = 0;
+		virtual void print(int num) = 0;
 	};
 
 	// Here you might have DTO structs and stuff to interface to us...
 }
 
-#endif // ADDER_SERVICE_H
+#endif //PRINTER_SERVICE_H
