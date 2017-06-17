@@ -19,13 +19,6 @@
 template<typename T> class lwc2_inject {};
 #endif // LWC2_INJECT_TEMPLATE
 
-/*
-#define LWC_INTERFACING_MODULES
-#include "AdderService.h"
-#include "PrinterServices.h"
-#include "MainControllerService.h"
-*/
-
 // LIST OF IMPLEMENTATION MODULE HEADERS HERE //
 // ////////////////////////////////////////// //
 
@@ -37,5 +30,6 @@ template<typename T> class lwc2_inject {};
 // Choose your implementation plugin / module for printer service by changing order here
 // as always the first in the list will get injected when more implementaion is available
 // in the lwc2.h descriptor file:
-#include "FilePrinterServiceImpl/ComponentImpl.h"
-#include "SimplePrinterServiceImpl/ComponentImpl.h"
+#include "BothPrinterServiceImpl/ComponentImpl.h" // BOTH -- active now as on the top uses the others directly
+#include "FilePrinterServiceImpl/ComponentImpl.h" // FILE
+#include "SimplePrinterServiceImpl/ComponentImpl.h" // SIMPL
